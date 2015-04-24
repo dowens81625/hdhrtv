@@ -58,7 +58,7 @@ class Channels_model {
         	elseif ($config['hdhr_type'] == 'dlna')
         	{
 			//Get XML from HDHR
-			$hdhr_url = "http://{$config['hdhr_ip']}/lineup.xml";
+			$hdhr_url = "http://{$config['hdhr_ip']}/lineup.xml?show=subscribed";
 
 			if($this->_remoteFileExists($hdhr_url))
 			{
