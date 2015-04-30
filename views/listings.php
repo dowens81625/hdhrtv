@@ -56,6 +56,26 @@
       <?php };?>
 
         <a class='row_right' href='<?php echo $row['link_details'];?>'><img src='public/images/go-next.png' alt='details' title='details'></a>
+      <?php
+        include 'config/mysql.php';
+                // 4/29 - Added script to connected to MythTV and pull the Title of the current show.
+                //set the timezone to match MythTV
+                date_default_timezone_set("GMT");
+                $date = date('Y-m-d H:i:s', time());
+                $chan = $row['channum'];
+                //offset channel to match MythTV channel ID - This May change depending on your MythTV chanids
+                $chanid = $chan + 1000;
+                $sql = "SELECT title FROM program WHERE chanid = '$chanid' AND starttime < '$date' AND endtime > '$date'";
+                $result = mysql_query($sql);
+                if (!$result) {
+                echo "DB Error, could not query the database\n";
+                echo 'MySQL Error: ' . mysql_error();
+                exit;
+                                }
+                while ($row = mysql_fetch_assoc($result)) {
+                        echo $row['title'];
+                }
+        ?>
       </div> <!-- channel_row -->
     </div> <!-- row_color -->
 
